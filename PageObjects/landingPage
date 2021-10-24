@@ -1,0 +1,71 @@
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+
+#import unittest
+
+class LandingPage(object):
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    #Define Loactors
+        self.signInButton = driver.find_element(By.XPATH, "//button[normalize-space()='Sign in']")
+        self.flightTab = driver.find_element(By.XPATH, "//a[@href='?pwaLob=wizard-flight-pwa']")
+        self.roundTripOption = driver.find_element(By.XPATH, "//a[@href='?flightType=roundtrip']")
+        self.fromDestination = driver.find_element(By.XPATH, "//button[@aria-label='Leaving from']")
+        self.toDestination = driver.find_element(By.XPATH, "//button[@aria-label='Going to']")
+        self.dateSelection = driver.find_element(By.XPATH, "//button[@id='d1-btn']")
+        self.roundTripIcon = driver.find_element(By.XPATH, "//button[@aria-label='Swap origin and destination']//*[name()='svg']")
+        self.searchFlightsButton = driver.find_element(By.XPATH, "button[type='submit']")
+        self.sortDropDown = driver.find_element(By.XPATH, "//select[@id='listings-sort']")
+        self.firstFlight = driver.find_element(By.XPATH, "//button[@data-test-id='select-link']")
+        self.continueForBooking = driver.find_element(By.XPATH, "//button[@data-test-id='select-button']")
+
+        #// button[ @ aria - label = 'Nov 18, 2021']
+
+
+    #define all the methods or actions
+
+    def signInButtonIsDisplayed(self):
+        assert(self.signInButton)
+
+    def clickOnFLightTab(self):
+        self.flightTab.click()
+
+    def clickOnRoundTrip(self):
+        self.roundTripOption.click()
+
+    def validateRoundTripIconIsDisplayed(self):
+        assert(self.roundTripIcon)
+
+    def selectFlightFromDestination(self, destination):
+        self.fromDestination.send_keys(destination)
+        self.fromDestination.send_keys(Keys.DOWN)
+        self.fromDestination.send_keys(Keys.ENTER)
+
+    def selectFlightToDestination(self, destination):
+        self.toDestination.send_keys(destination)
+        self.toDestination.send_keys(Keys.DOWN)
+        self.toDestination.send_keys(Keys.ENTER)
+
+    def selectDates(self, fromDate, toDate):
+        self.dateSelection.click()
+        self.driver.find_element(By.XPATH("// button[ @ aria - label = " + fromDate + "]"))
+        self.driver.find_element(By.XPATH("// button[ @ aria - label = " + toDate + "]"))
+
+    def clickOnSearchFlights(self):
+        self.searchFlightsButton.click()
+
+    def selectSortDropDown(self, optionToSelect):
+        select = Select(self.sortDropDown)
+        select.select_by_value(optionToSelect)
+
+    def selectFlight(self):
+        self.firstFlight.click()
+        self.continueForBooking.click()
+
+#if __name__ == '__main__':
+ #   unittest.main()
